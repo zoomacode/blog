@@ -13,6 +13,10 @@
             url_for('views.atom') }}" title="{{ config.TITLE }}" />
         <title>{{ config.TITLE }}{% block title %}{% endblock %}</title>
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
 <!-- begin opengraph header -->
 {% block opengraph_header %}{% endblock %}
 <!-- end opengraph header -->
@@ -23,31 +27,34 @@
 
     </head>
     <body>
-        <div id="header">
-            <h1>{{ config.TITLE_HTML }}</h1>
+        <div class="container">
+            <div class="header clearfix">
+                <h1 class="text-muted">{{ config.TITLE_HTML }}</h1>
+                <nav>
+                    <ul class="nav nav-pills pull-right">
+                        <li role="presentation" ><a href="{{ url_for('views.home') }}">Home</a></li>
+                        <li role="presentation" ><a href="{{ url_for('views.post_list') }}">Posts</a></li>
+                        <li role="presentation" ><a href="{{ url_for('views.content', slug='about') }}">About</a></li>
+                    </ul>
+                </nav>
+            </div>
             <h2>{{ config.TAGLINE }}</h2>
-            <ul>
-                <li><a href="{{ url_for('views.home') }}">Home</a></li>
-                <li><a href="{{ url_for('views.post_list') }}">Posts</a></li>
-                <li><a href="{{ url_for('views.content', slug='about') }}">About</a></li>
-            </ul>
-        </div>
-        <div id="body">
+            <div id="body">
+            <!-- begin content -->
+            {% block body %}{% endblock %}
+            <!-- end content -->
+            </div>
+                    
+            <div class="footer">
+                <p>
+                    Powered by: <a href="http://blohg.org/">blohg {{ version }}</a>
+                </p>
+            </div>
 
-<!-- begin content -->
-{% block body %}{% endblock %}
-<!-- end content -->
-
+            <!-- begin disqus footer -->
+            {% block disqus_footer %}{% endblock %}
+            <!-- end disqus footer -->
         </div>
-        <div id="footer">
-            <p>
-                Powered by: <a href="http://blohg.org/">blohg {{ version }}</a>
-            </p>
-        </div>
-
-<!-- begin disqus footer -->
-{% block disqus_footer %}{% endblock %}
-<!-- end disqus footer -->
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
         (function (d, w, c) {
